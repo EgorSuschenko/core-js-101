@@ -19,8 +19,8 @@
  *    'Tue, 26 Jan 2016 13:48:02 GMT' => Date()
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
-function parseDataFromRfc2822(/* value */) {
-  throw new Error('Not implemented');
+function parseDataFromRfc2822(value) {
+  return new Date(value);
 }
 
 /**
@@ -34,8 +34,8 @@ function parseDataFromRfc2822(/* value */) {
  *    '2016-01-19T16:07:37+00:00'    => Date()
  *    '2016-01-19T08:07:37Z' => Date()
  */
-function parseDataFromIso8601(/* value */) {
-  throw new Error('Not implemented');
+function parseDataFromIso8601(value) {
+  return new Date(value);
 }
 
 
@@ -53,8 +53,15 @@ function parseDataFromIso8601(/* value */) {
  *    Date(2012,1,1)    => true
  *    Date(2015,1,1)    => false
  */
-function isLeapYear(/* date */) {
-  throw new Error('Not implemented');
+function isLeapYear(date) {
+  if (date.getFullYear() % 4 !== 0) {
+    return false;
+  } if (date.getFullYear() % 100 !== 0) {
+    return true;
+  } if (date.getFullYear() % 400 !== 0) {
+    return false;
+  }
+  return true;
 }
 
 
@@ -73,8 +80,20 @@ function isLeapYear(/* date */) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,10,0,0,250)     => "00:00:00.250"
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
-function timeSpanToString(/* startDate, endDate */) {
-  throw new Error('Not implemented');
+function timeSpanToString(startDate, endDate) {
+  let diff = new Date(endDate - startDate);
+  let hours = Math.floor(diff / (60 * 60 * 1000));
+  diff -= hours * (60 * 60 * 1000);
+  let min = Math.floor(diff / (1000 * 60));
+  diff -= min * 60000;
+  let sec = Math.floor(diff / 1000);
+  diff -= sec * 1000;
+  const zero = '0';
+  if (hours <= 9) hours = zero + hours;
+  if (min <= 9) min = zero + min;
+  if (sec <= 9) sec = zero + sec;
+  if (diff <= 9) diff = zero + zero + diff;
+  return `${hours}:${min}:${sec}.${diff}`;
 }
 
 
@@ -94,8 +113,13 @@ function timeSpanToString(/* startDate, endDate */) {
  *    Date.UTC(2016,3,5,18, 0) => Math.PI
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
-function angleBetweenClockHands(/* date */) {
-  throw new Error('Not implemented');
+function angleBetweenClockHands(date) {
+  const hour = date.getHours() % 12;
+  const minutes = date.getMinutes();
+  if (hour === minutes) return 0;
+  // eslint-disable-next-line no-mixed-operators
+  const angle = ((0.5 * (hour * 60 + minutes) - 6 * minutes)) * Math.PI / 180;
+  return angle;
 }
 
 
