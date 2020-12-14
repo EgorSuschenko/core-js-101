@@ -18,8 +18,8 @@
  *   'aa',''    => 'aa'
  *   '',  'bb'  => 'bb'
  */
-function concatenateStrings(/* value1, value2 */) {
-  throw new Error('Not implemented');
+function concatenateStrings(value1, value2) {
+  return value1 + value2;
 }
 
 
@@ -34,8 +34,8 @@ function concatenateStrings(/* value1, value2 */) {
  *   'b'     => 1
  *   ''      => 0
  */
-function getStringLength(/* value */) {
-  throw new Error('Not implemented');
+function getStringLength(value) {
+  return value.length;
 }
 
 /**
@@ -51,8 +51,8 @@ function getStringLength(/* value */) {
  *   'John','Doe'      => 'Hello, John Doe!'
  *   'Chuck','Norris'  => 'Hello, Chuck Norris!'
  */
-function getStringFromTemplate(/* firstName, lastName */) {
-  throw new Error('Not implemented');
+function getStringFromTemplate(firstName, lastName) {
+  return `Hello, ${firstName} ${lastName}!`;
 }
 
 /**
@@ -65,8 +65,8 @@ function getStringFromTemplate(/* firstName, lastName */) {
  *   'Hello, John Doe!' => 'John Doe'
  *   'Hello, Chuck Norris!' => 'Chuck Norris'
  */
-function extractNameFromTemplate(/* value */) {
-  throw new Error('Not implemented');
+function extractNameFromTemplate(value) {
+  return `${value.split(' ')[1]} ${value.split(' ')[2].split('!')[0]}`;
 }
 
 
@@ -80,8 +80,8 @@ function extractNameFromTemplate(/* value */) {
  *   'John Doe'  => 'J'
  *   'cat'       => 'c'
  */
-function getFirstChar(/* value */) {
-  throw new Error('Not implemented');
+function getFirstChar(value) {
+  return value.split('').shift();
 }
 
 /**
@@ -95,8 +95,8 @@ function getFirstChar(/* value */) {
  *   'cat'              => 'cat'
  *   '\tHello, World! ' => 'Hello, World!'
  */
-function removeLeadingAndTrailingWhitespaces(/* value */) {
-  throw new Error('Not implemented');
+function removeLeadingAndTrailingWhitespaces(value) {
+  return value.trim();
 }
 
 /**
@@ -110,8 +110,8 @@ function removeLeadingAndTrailingWhitespaces(/* value */) {
  *   'A', 5  => 'AAAAA'
  *   'cat', 3 => 'catcatcat'
  */
-function repeatString(/* value, count */) {
-  throw new Error('Not implemented');
+function repeatString(value, count) {
+  return value.repeat(count);
 }
 
 /**
@@ -126,8 +126,8 @@ function repeatString(/* value, count */) {
  *   'I like legends', 'end' => 'I like legs',
  *   'ABABAB','BA' => 'ABAB'
  */
-function removeFirstOccurrences(/* str, value */) {
-  throw new Error('Not implemented');
+function removeFirstOccurrences(str, value) {
+  return str.replace(value, '');
 }
 
 /**
@@ -141,8 +141,8 @@ function removeFirstOccurrences(/* str, value */) {
  *   '<span>' => 'span'
  *   '<a>' => 'a'
  */
-function unbracketTag(/* str */) {
-  throw new Error('Not implemented');
+function unbracketTag(str) {
+  return str.substr(1, str.length - 2);
 }
 
 
@@ -156,8 +156,8 @@ function unbracketTag(/* str */) {
  *   'Thunderstruck' => 'THUNDERSTRUCK'
  *  'abcdefghijklmnopqrstuvwxyz' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
  */
-function convertToUpperCase(/* str */) {
-  throw new Error('Not implemented');
+function convertToUpperCase(str) {
+  return str.toUpperCase();
 }
 
 /**
@@ -175,8 +175,8 @@ function convertToUpperCase(/* str */) {
  *   ],
  *   'info@gmail.com' => ['info@gmail.com']
  */
-function extractEmails(/* str */) {
-  throw new Error('Not implemented');
+function extractEmails(str) {
+  return str.split(';');
 }
 
 /**
@@ -202,8 +202,27 @@ function extractEmails(/* str */) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  const str = [];
+  for (let i = 0; i < height; i += 1) {
+    if (i === 0) { str.push('┌'); }
+    if (i === height - 1) { str.push('└'); }
+    if (i !== 0 && i !== height - 1) { str.push('│'); }
+    if (i === 0 || i === height - 1) {
+      for (let j = 1; j < width - 1; j += 1) {
+        str.push('─');
+      }
+    } else {
+      for (let j = 1; j < width - 1; j += 1) {
+        str.push(' ');
+      }
+    }
+    if (i !== 0 && i !== height - 1) { str.push('│'); }
+    if (i === 0) { str.push('┐'); }
+    if (i === height - 1) { str.push('┘'); }
+    str.push('\n');
+  }
+  return str.join('');
 }
 
 
@@ -223,8 +242,15 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const big = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const small = 'abcdefghijklmnopqrstuvwxyz';
+  return str.split('').map((el) => {
+    // eslint-disable-next-line no-nested-ternary
+    const letters = big.includes(el) ? big : (small.includes(el) ? small : false);
+    if (!letters) return el;
+    return letters[(letters.indexOf(el) + 13) % 26];
+  }).join('');
 }
 
 /**
@@ -240,8 +266,8 @@ function encodeToRot13(/* str */) {
  *   isString('test') => true
  *   isString(new String('test')) => true
  */
-function isString(/* value */) {
-  throw new Error('Not implemented');
+function isString(value) {
+  return typeof value === 'string' || value instanceof String;
 }
 
 
@@ -269,8 +295,62 @@ function isString(/* value */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  const ids = {
+    0: 'A♣',
+    1: '2♣',
+    2: '3♣',
+    3: '4♣',
+    4: '5♣',
+    5: '6♣',
+    6: '7♣',
+    7: '8♣',
+    8: '9♣',
+    9: '10♣',
+    10: 'J♣',
+    11: 'Q♣',
+    12: 'K♣',
+    13: 'A♦',
+    14: '2♦',
+    15: '3♦',
+    16: '4♦',
+    17: '5♦',
+    18: '6♦',
+    19: '7♦',
+    20: '8♦',
+    21: '9♦',
+    22: '10♦',
+    23: 'J♦',
+    24: 'Q♦',
+    25: 'K♦',
+    26: 'A♥',
+    27: '2♥',
+    28: '3♥',
+    29: '4♥',
+    30: '5♥',
+    31: '6♥',
+    32: '7♥',
+    33: '8♥',
+    34: '9♥',
+    35: '10♥',
+    36: 'J♥',
+    37: 'Q♥',
+    38: 'K♥',
+    39: 'A♠',
+    40: '2♠',
+    41: '3♠',
+    42: '4♠',
+    43: '5♠',
+    44: '6♠',
+    45: '7♠',
+    46: '8♠',
+    47: '9♠',
+    48: '10♠',
+    49: 'J♠',
+    50: 'Q♠',
+    51: 'K♠',
+  };
+  return Object.keys(ids).find((key) => ids[key] === value);
 }
 
 
